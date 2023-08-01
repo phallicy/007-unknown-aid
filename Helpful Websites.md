@@ -20,3 +20,7 @@ The above is an older version of powershell but the basics still apply to what i
 
 Active Directory is a beast at times, This tutorial should help you understand the basics of it and direct you through how the system is supposed to work.
 https://www.youtube.com/watch?v=zrCNGzwLjcU
+
+For the linux guys, here is a helpful tutorial on linux systems, not everything can be learnt with ease and it is suggested to jump onto a Virtual Machine and play around on the linux systems.
+https://www.youtube.com/watch?v=sWbUDq4S6Y8 (~7hr)
+https://www.youtube.com/watch?v=ROjZy1WbCIA (~3hr)
