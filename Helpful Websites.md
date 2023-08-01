@@ -24,3 +24,9 @@ https://www.youtube.com/watch?v=zrCNGzwLjcU
 For the linux guys, here is a helpful tutorial on linux systems, not everything can be learnt with ease and it is suggested to jump onto a Virtual Machine and play around on the linux systems.
 https://www.youtube.com/watch?v=sWbUDq4S6Y8 (~7hr)
 https://www.youtube.com/watch?v=ROjZy1WbCIA (~3hr)
+
+PFsense is one of the more painful areas of this and this is a tutorial that is probably more than you need to know on PFsense. Though it will come in handy.
+https://www.youtube.com/playlist?list=PLjGQNuuUzvmsuXCoj6g6vm1N-ZeLJso6o
+This is a more basic idea of PFsense if you don't want to spend the time actually learning about PFsense. https://www.youtube.com/watch?v=Vm98ofYp05g
+
+When it comes to your Vitrual Machines, every time you have something working, snapshot it, back it up, checkpoints and copies are going to be your friend. If anything goes wrong you will have a place to start from. Even if it is just a checkpoint after it was done installing. It will aid you greatly.
