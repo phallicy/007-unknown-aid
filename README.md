@@ -7,3 +7,5 @@ In the Pictoral Aids you will find things for cisco, linux and network basics th
 In the PDF Aids you will find information on tools and process that will make things easier for those still learning and wanting to deep dive into the world of cyber.
 
 This is by no means a space that will help you understand everything and is a basic setup. Enjoy.
+
+I am still working on getting things for AD.
