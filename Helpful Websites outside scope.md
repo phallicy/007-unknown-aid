@@ -21,6 +21,9 @@ https://www.calculator.net/ip-subnet-calculator.html
 https://osintframework.com/
 (Open Source Intelligence Framework, good tool to systematically gain information that is open source)
 
+https://www.dcode.fr/tools-list
+(Massive List of Tools to crack Ciphers with)
+
 ## Attacker Techniques and System Vulnerability Learning
 
 https://www.hackthebox.com/login
