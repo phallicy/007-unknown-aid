@@ -1,5 +1,7 @@
 # Helpful Websites Outside Scope
 
+Literally just the basics
+
 ## CTF
 https://ctflearn.com/dashboard
 (Good for confirming and reinforcing the program use and information gathering of data)
