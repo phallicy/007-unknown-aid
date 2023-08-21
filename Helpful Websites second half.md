@@ -50,3 +50,12 @@ Utilize git and stack overflow to help you further when it comes to errors or is
 <https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx>
 
 ^ good and fast guide to tracking down what Event ID's that you may need or what they are when theyre found.
+
+<https://cheatsheetseries.owasp.org/index.html>
+
+^ OWASP cheatsheets on mitigation techniques
+
+<https://cyber.3629.ch/>
+<https://www.jaiminton.com/cheatsheet/DFIR/#>
+
+^ Detailed tool use and information Blue team cheat sheet
