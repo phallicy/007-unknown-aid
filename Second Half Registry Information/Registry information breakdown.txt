@@ -1,0 +1,131 @@
+These are the things to pay particular interest in when beginning the investigation on a system.
+
+Sam
+C:\Windows\System32\config\
+
+- Baseline Users and groups membership ( Persistance Gained)
+registry > HKEY_LOCAL_MACHINE\SAM\Domains\Account\Users\Names
+System Information > System[(EventID=4720)
+CMD > dir /tc c:\users
+	- Login dates/times and whether the user is an admin or not
+	- If the user is already an admin you dont need to escalate privileges
+- User RID
+SAM\SAM\Domains\Builtin\Aliases key
+
+User Group Assignments 
+SYSTEM ID > System[(EventID=4732)]
+Powershell > Get-EventLog Security -InstanceId 4732 | Where-Object {$_.Message -like "*Administrators*" -and $_.message -match 'S-1-5-21-xxxxxxxx-xxxxxxxxx-xxxxxxxxx-1005'} | Select-Object *
+Registry > HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList
+
+User Deleted
+System > (EventID=4726)
+Powershell > wevtutil qe security /f:text “/q:*[System[(EventID=4726)]]” | Select-String -Pattern ‘Target Account’ -Context 0,2
+
+
+System
+- Timezoneinformation (Obfuscation of information)
+- Control Sets
+- Service Meanisms of persistences (Boot or logon suto start locations for execution) OKA Auto exicution start points
+- Devices/Drivers/USB/ETC (Replication through remote media
+
+
+Software
+- Operating systems baseline information (needed for version of volatility)
+- Registered Owner
+- Run/Run Once for the system
+- Installed Program
+- Remnants of previously installed programs
+
+NTuser.dat
+- Ren/RunOnce for the user
+- MRU's (office, Run cmd, Notepad, ETC) Drive by Commpromise/ Initial Access or User Execution
+- Recent Docs
+- Types URL's Typed Paths
+- Mounted Devices ( Replication through remote media) 
+- User Assist (User Execution / Execution) 
+
+NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs - HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs - Directly from Windows Explorer
+NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32
+NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\OpenSavePidlMRU - HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\OpenSaveMRU - maintains the list of files saved within windows explorer
+	^For Windows Vista And later^
+NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU - HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU - User Run Applications on start up.
+
+
+
+Registry Check list
+- Most Recent User List > HKEY_CURRENT_USER\software\microsoft\windows\currentversion\Explorer\RunMRU
+- USB Conncetions > HKEY_LOCAL_MACHINE\SYSTEM\controlset001\Enum\USBSTOR.
+- Attached Hardware List >  HKEY_LOCAL_MACHINE\SYSTEM|MountedDevices.
+- Check for Malicious software > HKEY_CURRENT_USER\Software\
+- Recently Used Applications > HKEY_CURRENT_USER\SOFTWARE\Microsoft\Currentversion\Search\RecentApps
+- Internet Explorer Information > HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\TypedURLs.
+- MRU Lists to check for 
+
+Registry Locations worth looking at.
+HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\OpenSaveMRU - maintains the list of files saved within windows explorer
+HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\LastVisitedMRU - Shows the last and most recent version of files opened and accessed in file explorer and what application opened it.
+HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs - Directly from Windows Explorer
+HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU - User Run Applications on start up.
+HKCU\Software\Microsoft\Internet Explorer\TypedURLs - List of Recently Typed URL's. (Note that this can be modified for other web browsers also. ie. HKCU\Software\*Application Manufacturer*\*Application Name*\TypedURLs *or any other URL specific folder*. This information may require manual retrieval before being able to track the information out from registry.
+HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\UserAssist - User Accessed applications information. All Entries are ROT-13 Encoded
+HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management - Page File. this should be checked before closing down any host system to ensure that the information is not lost before next start up.
+HKCU\Software\Microsoft\Search Assistant\ACMru - The Default search menu option for Windows and can be used to see certain things like.
+	Sub Keys which enable a series of things to be found.
+	5001: Contains list of terms used for the Internet Search Assistant
+	5603: Contains the list of terms used for the Windows files and folders search
+	5604: Contains list of terms used in the “word or phrase in a file” search
+	5647: Contains list of terms used in the “for computers or people” search
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\WordWheelQuery - Windows 7 Saves the words searches here instead of ACMRU
+HKLM\SOFTWARE\Microsoft\Windows\Current\Version\Uninstall - The place to find if any programs have been uninstalled and which ones have been uninstalled through the "Add/remove Programs" option in windows.
+HKLM\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\MyProgram - For 32Bit Installs on a 64Bit System
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall - Alternate Location for Uninstalled software to be stored.
+HKLM\SYSTEM\MountedDevices - Mounted Devices are to check for the devices that have been or are attached that have attained a system volume letter or if the volumes information has been retained. From the listed registry values, the value’s that starts with \DosDevices\ and ends with the associated drive letter, contains information regarding that particular mounted device.
+HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\MountPoints2\CPCVolume - Similar to the above
+HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Map Network Drive MRU - This tracks the Network drives that have been mapped and information pertaining to each one.
+HKCU\Software\Microsoft\Windows\Current\VersionExplorer\MountPoints2 - similar to the above unless the information has been manually removed from the registry.
+HKLM\SYSTEM\CurrentControlSet\Enum\USBSTOR - USB Storage infromation inc. file systems structure, device name and UID
+HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run - Auto run for the System itself
+	For Win98 and WinME ONLY These do not apply to other versions though may be found and if found can be of use.
+	HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnce
+	HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnceEx
+	HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnce
+	HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnceEx
+Group of Run Services for Both Local Machine and Current User
+HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\Services
+HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\Services
+HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\ServicesOnce
+HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\ServicesOnce
+Commands run Automatically when CMD is Executed
+	HKLM\SOFTWARE\Microsoft\Command Processor
+	HKCU\Software\Microsoft\Command Processor
+HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon - Malware appends the malware executable file to the default value’s data to stay persistence across system reboots and logins (modification to this key requires administrative privilege)
+HKLM\SYSTEM\CurrentControlSet\Services - Each subkey represents a service and contains service’s information such as startup configuration and executable image path.
+HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options - This feature could be exploited to launch a completely different program under the cover of the initial program.
+HKCR\exe\fileshell\opencommand - Normally, this key contains one default value with data “%1” %*, but if the value’s data is changed to something similar to somefilename.exe “%1” %* , investigator should suspect some other hidden program is invoked automatically when the actual .exe file is executed. (Malware normally modify this value to load itself covertly)
+	The above also applies to these two areas and helps with persistance
+	- HKEY_CLASSES_ROOT\batfile\shell\open\command
+	- HKEY_CLASSES_ROOT\comfile\shell\open\command
+HKCU\Software\Microsoft\Protected Storage System Provider - Registry editor hides these registry keys from users viewing and Administrators, There are tools that allow you to view these registries on a live system such as "Protected Storage PassView" and "PStoreView".
+HKLM\SYSTEM\ControlSet001\Control\TimeZoneInformation - Timezone Information
+HKLM \SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkCards - NIC Information
+HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\{GUID} - This registry stores the IP addresses of the Groups and Wireless network information
+HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles\ - Stores All Network Information inc. Which networks have been connected to
+
+
+
+
+Autorun Locations - Checked for persistance and potentially initial access
+
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run
+
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
+
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunOnce
+
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce
+
+(ProfilePath)\Start Menu\Programs\Startup
+
+TIMEZONE INFORMATION
+
+HKLM\SYSTEM\ControlSet001\Control\TimeZoneInformation
