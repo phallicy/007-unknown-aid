@@ -1,8 +1,4 @@
-https://itexamanswers.net/ccna-1-v7-0-final-exam-answers-full-introduction-to-networks.html
-Make sure to see the examples, the best way to pass CCNA is to understand the material, not just remember the answers.
-
-https://itexamanswers.net/ccna-2-v7-0-final-exam-answers-full-switching-routing-and-wireless-essentials.html
-Make sure to see the examples, the best way to pass CCNA is to understand the material, not just remember the answers.
+Helpful Websites and information
 
 For Setup of Cisco networks and their apropriate hardware, this takes you through the information that would help when dealing with packet tracer and a better understanding of the networks.
 https://www.youtube.com/playlist?list=PLvUOx2WG6R7PMM8UhMWevH75QzGyXOv4g
